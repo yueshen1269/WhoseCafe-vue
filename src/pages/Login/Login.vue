@@ -39,12 +39,12 @@
                 </div>
               </section>
               <section class="login_message">
-                <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
-                <img class="get_verification" src="./images/captcha.svg" alt="captcha">
+                <input type="text" maxlength="11" placeholder="验证码" v-model="captcha" @keyup.enter="enterLogin">
+                <img class="get_verification" src="http://localhost:4000/captcha" alt="captcha" @click="getCaptcha()" ref="captcha">
               </section>
             </section>
           </div>
-          <button class="login_submit">登录</button>
+          <button class="login_submit" ref="login">登录</button>
         </form>
         <a href="javascript:;" class="about_us">关于我们</a>
       </div>
@@ -58,6 +58,7 @@
 
 <script>
 import AlertTip from "../../components/AlertTip/AlertTip.vue"
+import {reqSendCode, reqSmsLogin, reqPwdLogin} from '../../api'
 export default {
   components:{
     AlertTip
@@ -85,7 +86,7 @@ export default {
     }
   },
   methods: {
-    getCode () {
+    async getCode () {
       if (!this.intervalId) {
         this.computeTime = 30;
         this.intervalId = setInterval( () => {
@@ -94,9 +95,17 @@ export default {
             clearInterval(intervalId);
             this.intervalId = null;
           }
-        }, 1000)
+        }, 1000);
+        const result = await reqSendCode(this.phone);
+        if (result.code === 1) {
+          this.showAlert(result.msg);
+          if(this.computeTime) {
+            this.computeTime = 0;
+            clearInterval(this.intervalId);
+            this.intervalId = null;
+          }
+        }
       }
-
     },
     showAlert (alertText) {
       this.alertShow = true;
@@ -106,24 +115,53 @@ export default {
       this.alertShow = false;
       this.alertText = "";
     },
-    login () {
+    async login () {
+      let result = undefined;
       if (this.loginWay) {
         const {rightPhone, phone, code} = this;
         if (!rightPhone) {
           this.showAlert("手机号不正确");
+          return;
         } else if (!/^d{6}$/.test(code)) {
           this.showAlert("验证码不正确");
+          return;
         }
+        result = await reqSmsLogin(phone, code);
+
       } else {
         const {name, pwd, captcha} = this;
         if (!name) {
           this.showAlert("请输入用户名");
+          return;
         } else if (!pwd) {
           this.showAlert("请输入密码");
+          return;
         } else if (!captcha) {
           this.showAlert("验证码不正确");
+          return;
         }
+        result = await reqPwdLogin({name, pwd, captcha});
       }
+      if(this.computeTime) {
+            this.computeTime = 0;
+            clearInterval(this.intervalId);
+            this.intervalId = null;
+          }
+      if (result.code == 0) {
+          const user = result.data;
+          this.$store.dispatch("recordUser", user);
+          this.$router.replace('/profile');
+      } else {
+          const msg = result.msg;
+          this.showAlert(msg);
+          this.getCaptcha();
+      }
+    },
+    getCaptcha () {
+      this.$refs.captcha.src = "http://localhost:4000/captcha?time"+ Date.now();
+    },
+    enterLogin () {
+      this.$refs.login.click();
     }
   },
   created(){},
