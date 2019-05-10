@@ -12,7 +12,7 @@
         <router-link class="item" to="/shop/info">商家</router-link>
       </div>
     </div>
-    <!-- <router-view></router-view> -->
+    <router-view></router-view>
   </div>
 </template>
 
