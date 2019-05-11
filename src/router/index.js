@@ -63,20 +63,20 @@ export default new Router({
       component: Shop,
       children: [
         {
-          path: '/shop/goods',
+          path: 'goods',
           component: ShopGoods
         },
         {
-          path: '/shop/ratings',
+          path: 'ratings',
           component: ShopRatings
         },
         {
-          path: '/shop/info',
+          path: '/shop/info', // 绝对路径
           component: ShopInfo
         },
         {
           path: '',
-          redirect: '/shop/goods'
+          redirect: 'goods'// 相对路径，不能加/
         }
       ]
     }
