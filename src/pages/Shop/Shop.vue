@@ -3,16 +3,19 @@
     <shop-header></shop-header>
     <div class="tab">
       <div class="tab-item">
-        <router-link class="item" to="/shop/goods">点餐</router-link>
+        <router-link class="item" to="/shop/goods" replace>点餐</router-link>
         </div>
       <div class="tab-item">
-        <router-link class="item" to="/shop/ratings">评价</router-link>
+        <router-link class="item" to="/shop/ratings" replace>评价</router-link>
       </div>
       <div class="tab-item">
-        <router-link class="item" to="/shop/info">商家</router-link>
+        <router-link class="item" to="/shop/info" replace>商家</router-link>
       </div>
     </div>
-    <router-view></router-view>
+    <!-- 缓存路由组件 -->
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 

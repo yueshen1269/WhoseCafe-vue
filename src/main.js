@@ -6,6 +6,12 @@ import router from './router'
 import store from './store'
 import {Button} from 'mint-ui'
 import './mock/mockServer.js'
+import VueLazyload from 'vue-lazyload'
+import loading from './common/images/loading.gif'
+import './filters'
+Vue.use(VueLazyload, { // 内部自定义一个指令v-lazy
+  loading
+})
 
 Vue.config.productionTip = false
 
