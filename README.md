@@ -28,9 +28,9 @@
 6. 学会使用 vue-lazyload 实现图片惰加载
 7. 学会使用 mockjs 模拟后台数据接口
 
-## 3. API接口文档
+## 3. 后台文件及api接口文档
 
-[项目API接口文档](https://github.com/git-canye/foodshop/blob/master/mintshop-server/API.md)
+[后台地址](https://github.com/yueshen1269/whosecafe-node)
 
 ## 4. 运行项目
 
