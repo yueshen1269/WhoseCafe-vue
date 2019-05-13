@@ -4,14 +4,14 @@
     <header-top :title="address.name">
       <template v-slot:left>
         <router-link class="header_search" to="/search">
-        <i class="iconfont icon-sousuo"></i>
-      </router-link>
+          <i class="iconfont icon-sousuo"></i>
+        </router-link>
       </template>
       <template v-slot:right>
         <router-link class="header_login" :to="userInfo._id ? './userInfro' : '/login'">
-        <span class="header_login_text" v-if="!userInfo._id">登录|注册</span>
-        <span class="header_login_text" v-else><i class="iconfont icon-person"></i></span>
-      </router-link>
+          <span class="header_login_text" v-if="!userInfo._id">登录|注册</span>
+          <span class="header_login_text" v-else><i class="iconfont icon-person"></i></span>
+        </router-link>
       </template>
     </header-top>
     <!--首页导航-->

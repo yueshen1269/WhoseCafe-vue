@@ -1,11 +1,11 @@
 <template>
   <div class="footer_guide">
-    <span class="guide_item" :class="{on: '/msite'===$route.path}" @click="goTo('/msite')">
+    <router-link to="/msite" class="guide_item" active-class="on" replace>
       <span class="item_icon">
         <i class="iconfont icon-waimai"></i>
       </span>
       <span>外卖</span>
-    </span>
+    </router-link>
     <a href="javascript:;" class="guide_item" :class="{on: '/search'===$route.path}" @click="goTo('/search')">
       <span class="item_icon">
         <i class="iconfont icon-search"></i>
