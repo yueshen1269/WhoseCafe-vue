@@ -38,7 +38,6 @@
           </div>
         </div>
       </transition>
-
     </div>
     <div class="list-mask" v-show="listShow" @click="toggleShow"></div>
   </div>
@@ -86,7 +85,7 @@ export default {
       listShow () {
         // 如果总数量为0, 直接不显示
         if(this.totalCount===0) {
-          this.isShow = false
+          this.isShow = false // 在isShow为true时，点餐会使购物车自动跳出
           return false
         }
 
